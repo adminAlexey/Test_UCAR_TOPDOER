@@ -6,11 +6,12 @@ import sqlite3
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+app.json.ensure_ascii = False  # type: ignore
 
-# Инициализация базы данных
 def init_db():
     """Инициализирует базу данных, если она не существует."""
     conn = sqlite3.connect('reviews.db')
+    conn.execute("PRAGMA encoding = 'UTF-8'")
     cursor = conn.cursor()
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS reviews (
@@ -25,20 +26,20 @@ def init_db():
 
 init_db()
 
-
 def analyze_sentiment(text):
     """Функция определения настроения"""
     text_lower = text.lower()
     positive_words = {'хорош', 'отличн', 'прекрасн', 'люблю', 'нравится', 'супер', 'класс', 'восхитительн'}
     negative_words = {'плох', 'ужасн', 'ненавиж', 'отвратительн', 'кошмар', 'разочарован', 'недоволен'}
 
-    if any(word in text_lower for word in positive_words):
-        return 'positive'
+    # Проверяем сначала негатив на тот случай, если встречаются оба слова в одном отзыве
+    # тем самым исключаем ошибочное определение позитивного отзыва
     if any(word in text_lower for word in negative_words):
         return 'negative'
+    if any(word in text_lower for word in positive_words):
+        return 'positive'
     return 'neutral'
 
-# 
 @app.route('/reviews', methods=['POST'])
 def add_review():
     """Добавляет отзыв в БД"""
@@ -76,9 +77,9 @@ def add_review():
         'created_at': review[3]
     }), 201
 
-# GET endpoint для получения отзывов
 @app.route('/reviews', methods=['GET'])
 def get_reviews():
+    """Получить отзывы из БД"""
     sentiment_filter = request.args.get('sentiment')
 
     query = 'SELECT id, text, sentiment, created_at FROM reviews'

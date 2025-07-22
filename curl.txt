@@ -1,0 +1,47 @@
+C:\Users\adminAlexey>echo {"text":"кошмар сервис"} | curl.exe -X POST http://localhost:5000/reviews -H "Content-Type: application/json; charset=utf-8" --data-binary @-
+{
+  "created_at": "2025-07-22T20:22:56.844400",
+  "id": 1,
+  "sentiment": "negative",
+  "text": "\u043a\u043e\u0448\u043c\u0430\u0440 \u0441\u0435\u0440\u0432\u0438\u0441"
+}
+
+C:\Users\adminAlexey>echo {"text":"кошмар сервис"} | curl.exe -X POST http://localhost:5000/reviews -H "Content-Type: application/json; charset=utf-8" --data-binary @-
+{
+  "created_at": "2025-07-22T20:28:14.693341",
+  "id": 2,
+  "sentiment": "negative",
+  "text": "кошмар сервис"
+}
+
+C:\Users\adminAlexey>echo {"text":"ужасно крутой сервис"} | curl.exe -X POST http://localhost:5000/reviews -H "Content-Type: application/json; charset=utf-8" --data-binary @-
+{
+  "created_at": "2025-07-22T20:33:05.085326",
+  "id": 3,
+  "sentiment": "negative",
+  "text": "ужасно крутой сервис"
+}
+
+C:\Users\adminAlexey>echo {"text":"круто получилось"} | curl.exe -X POST http://localhost:5000/reviews -H "Content-Type: application/json; charset=utf-8" --data-binary @-
+{
+  "created_at": "2025-07-22T20:33:17.460653",
+  "id": 4,
+  "sentiment": "neutral",
+  "text": "круто получилось"
+}
+
+C:\Users\adminAlexey>echo {"text":"молодцы ребята, умеете, могёте"} | curl.exe -X POST http://localhost:5000/reviews -H "Content-Type: application/json; charset=utf-8" --data-binary @-
+{
+  "created_at": "2025-07-22T20:33:50.319117",
+  "id": 5,
+  "sentiment": "neutral",
+  "text": "молодцы ребята, умеете, могёте"
+}
+
+C:\Users\adminAlexey>echo {"text":"суперски"} | curl.exe -X POST http://localhost:5000/reviews -H "Content-Type: application/json; charset=utf-8" --data-binary @-
+{
+  "created_at": "2025-07-22T20:34:10.340266",
+  "id": 6,
+  "sentiment": "positive",
+  "text": "суперски"
+}
