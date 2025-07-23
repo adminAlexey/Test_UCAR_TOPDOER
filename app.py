@@ -135,13 +135,17 @@ def add_review():
 @app.route("/reviews", methods=["GET"])
 def get_reviews():
     """Получить отзывы из БД"""
-    sentiment = request.args.get("sentiment")
+    sentiment_filter = None
+    try:
+        sentiment_filter = Sentiment(request.args.get('sentiment'))
+    except ValueError:
+        # logger
+        pass
 
     query = "SELECT id, text, sentiment, created_at FROM reviews"
     params = ()
 
-    if sentiment:
-        sentiment_filter = Sentiment(sentiment)
+    if sentiment_filter:
         query += " WHERE sentiment = ?"
         params = (sentiment_filter,)
 
